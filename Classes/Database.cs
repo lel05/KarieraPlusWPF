@@ -53,19 +53,12 @@ namespace KarieraPlus.Classes
                                                     "`offer_id` PRIMARY KEY AUTOINCREMENT," +
                                                     "`company_id` int(10)," +
                                                     "`profession_name` varchar(40)," +
-                                                    "`profession_level` varchar(40)," +
                                                     "`type_of_contract` varchar(50)," +
-                                                    "`employment` varchar(50)," +
                                                     "`type_of_job` varchar(30)," +
                                                     "`salary` text," +
-                                                    "`days` text," +
-                                                    "`hours` text," +
-                                                    "`expired` date," +
                                                     "`category_id` int(10)," +
                                                     "`duties` text," +
-                                                    "`requirements` text," +
-                                                    "`benefits` int(11)," +
-                                                    "`application_count` int(10));";
+                                                    "`requirements` text);" +
                     offerTableCommand.ExecuteReader();
                     db.Close();
 
@@ -78,7 +71,7 @@ namespace KarieraPlus.Classes
                                                     "`surname` varchar(30) NOT NULL," +
                                                     "`birth_date` date," +
                                                     "`email` varchar(50) NOT NULL," +
-                                                    "`number` int(10)," +
+                                                    "`phone_number` int(10)," +
                                                     "`avatar` text," +
                                                     "`address` varchar(40)," +
                                                     "`profession` varchar(40)," +
