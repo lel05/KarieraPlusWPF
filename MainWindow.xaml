@@ -39,7 +39,7 @@
             <TextBox Name="TextBoxSearch" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Center" Width="500" Height="30"/>
 
             <StackPanel x:Name="offersStackPanel" Grid.Row="1">
-                
+                <Grid x:Name="offersGrid"></Grid>
             </StackPanel>
 
         </Grid>
