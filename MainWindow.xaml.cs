@@ -167,10 +167,20 @@ namespace KarieraPlus
                 {
                     using (var reader = command.ExecuteReader())
                     {
+                    
+                    int row = 0;
                         while (reader.Read())
+                        {
+                        offersGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        offersGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        offersGrid.RowDefinitions.Add(new RowDefinition());
+
+                        for(int i = 0; i<2; i++)
                         {
                             Grid dynamicGrid = new Grid();
 
+dynamicGrid.Column = i;
+dynamicGrid.Row = row;
                             dynamicGrid.Width = 400;
                             dynamicGrid.Height = 200;
                             dynamicGrid.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -244,7 +254,9 @@ namespace KarieraPlus
                             Grid.SetColumn(category, 1);
                             dynamicGrid.Children.Add(category);
 
-                            offersStackPanel.Children.Add(dynamicGrid);
+                            offersGrid.Children.Add(dynamicGrid);
+                            }
+                            row++;
                         }
                     }
                 }
