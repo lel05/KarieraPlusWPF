@@ -72,7 +72,6 @@ namespace KarieraPlus.Classes
                                                     "`birth_date` date," +
                                                     "`email` varchar(50) NOT NULL," +
                                                     "`phone_number` int(10)," +
-                                                    "`avatar` text," +
                                                     "`address` varchar(40)," +
                                                     "`profession` varchar(40)," +
                                                     "`profession_description` text," +
@@ -85,6 +84,15 @@ namespace KarieraPlus.Classes
                                                     "`links` text," +
                                                     "`password` text NOT NULL);";
                     userTableCommand.ExecuteReader();
+                    db.Close();
+
+                    db.Open();
+                    var offersCalimedTableCommand = new SqliteCommand();
+                    offersCalimedTableCommand.Connection = db;
+                    offersCalimedTableCommand.CommandText = "CREATE TABLE `offers_claimed` (" +
+                                                    "`offer_id` INTEGER, " +
+                                                    "`user_id` INTEGER;";
+                    offersCalimedTableCommand.ExecuteReader();
                     db.Close();
                 }
             }

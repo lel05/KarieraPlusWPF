@@ -35,14 +35,18 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
             <TextBox Name="TextBoxSearch" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Center" Width="500" Height="30"/>
 
-            <StackPanel x:Name="offersStackPanel" Grid.Row="1">
-<Border BorderBrush="Black" BorderThickness="2">
-                <Grid x:Name="offersGrid"></Grid>
-<Border>
-            </StackPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2">
+                <Grid x:Name="offersGrid" HorizontalAlignment="Center">
+
+                </Grid>
+            </ScrollViewer>
+            
 
         </Grid>
     </Grid>

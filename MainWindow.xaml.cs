@@ -22,7 +22,8 @@ namespace KarieraPlus
     /// </summary>
     public partial class MainWindow : Window
     {
-        int? userId = null;
+        public static int? userId = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -77,6 +78,7 @@ namespace KarieraPlus
                                 loginBtn.Click -= Login_Click;
                                 loginBtn.Click += myProfile;
                                 logOutBtn.Visibility = Visibility.Visible;
+                                registerBtn.Visibility = Visibility.Hidden;
 
                                 string queryId = "SELECT user_id FROM user WHERE email=@email";
                                 using (var command = new SqliteCommand(queryId, db))
@@ -103,7 +105,8 @@ namespace KarieraPlus
 
         public void myProfile(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("profil");
+            User_Page page = new User_Page();
+            page.ShowDialog();
         }
 
         private void logOutBtn_Click(object sender, RoutedEventArgs e)
@@ -114,11 +117,13 @@ namespace KarieraPlus
             userId = null;
             logOutBtn.Visibility = Visibility.Hidden;
             addOffer.Visibility = Visibility.Hidden;
+            registerBtn.Visibility = Visibility.Visible;
         }
 
         private void addOffer_Click(object sender, RoutedEventArgs e)
         {
-
+            Admin_Page page = new Admin_Page();
+            page.ShowDialog();
         }
 
         private void registerBtn_Click(object sender, RoutedEventArgs e)
@@ -167,25 +172,31 @@ namespace KarieraPlus
                 {
                     using (var reader = command.ExecuteReader())
                     {
-                    
-                    int row = 0;
-                        while (reader.Read())
-                        {
+                        offersGrid.ColumnDefinitions.Add(new ColumnDefinition());
                         offersGrid.ColumnDefinitions.Add(new ColumnDefinition());
                         offersGrid.ColumnDefinitions.Add(new ColumnDefinition());
                         offersGrid.RowDefinitions.Add(new RowDefinition());
 
-                        for(int i = 0; i<2; i++)
+                        int row = 0;
+                        int column = 0;
+                        while (reader.Read())
                         {
-                            Grid dynamicGrid = new Grid();
+                            if(column > 2)
+                            {
+                                column = 0;
 
-dynamicGrid.Column = i;
-dynamicGrid.Row = row;
+                                offersGrid.RowDefinitions.Add(new RowDefinition());
+                                row++;
+                            }
+                            Grid dynamicGrid = new Grid();
+                            Grid.SetColumn(dynamicGrid, column);
+                            Grid.SetRow(dynamicGrid, row);
                             dynamicGrid.Width = 400;
                             dynamicGrid.Height = 200;
+                            dynamicGrid.Margin = new Thickness(10);
                             dynamicGrid.HorizontalAlignment = HorizontalAlignment.Stretch;
                             dynamicGrid.VerticalAlignment = VerticalAlignment.Stretch;
-                            dynamicGrid.Margin = new Thickness(30);
+                            
                             dynamicGrid.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#F8B500");
 
                             dynamicGrid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -203,17 +214,12 @@ dynamicGrid.Row = row;
                             Grid.SetColumnSpan(profession_name, 2);
                             dynamicGrid.Children.Add(profession_name);
 
-                            Label type_of_job = new Label() { Content = reader["type_of_job"] };
-                            Grid.SetRow(type_of_job, 0);
-                            Grid.SetColumn(type_of_job, 2);
-                            dynamicGrid.Children.Add(type_of_job);
-
-                            Label type_of_contract = new Label() { Content = reader["type_of_contract"] };
+                            Label type_of_contract = new Label() { Content = "Contract: " + reader["type_of_contract"] };
                             Grid.SetRow(type_of_contract, 1);
                             Grid.SetColumn(type_of_contract, 0);
                             dynamicGrid.Children.Add(type_of_contract);
 
-                            Label salary = new Label() { Content = reader["salary"] };
+                            Label salary = new Label() { Content = "Salary: " + reader["salary"] };
                             Grid.SetRow(salary, 1);
                             Grid.SetColumn(salary, 1);
                             Grid.SetColumnSpan(salary, 2);
@@ -234,19 +240,6 @@ dynamicGrid.Row = row;
                             Grid.SetColumnSpan(company_name, 2);
                             dynamicGrid.Children.Add(company_name);
 
-                            TextBlock duties = new TextBlock() { Text = reader["duties"].ToString() };
-                            duties.TextWrapping = TextWrapping.Wrap;
-                            Grid.SetRow(duties, 3);
-                            Grid.SetColumn(duties, 0);
-                            Grid.SetRowSpan(duties, 2);
-                            dynamicGrid.Children.Add(duties);
-
-                            TextBlock requirements = new TextBlock() { Text = reader["requirements"].ToString() };
-                            Grid.SetRow(requirements, 3);
-                            Grid.SetColumn(requirements, 2);
-                            Grid.SetRowSpan(requirements, 2);
-                            dynamicGrid.Children.Add(requirements);
-
                             int categoryId = Convert.ToInt32(reader["company_id"]);
                             string categoryName = GetCategoryName(db, categoryId);
                             Label category = new Label() { Content = categoryName };
@@ -254,15 +247,31 @@ dynamicGrid.Row = row;
                             Grid.SetColumn(category, 1);
                             dynamicGrid.Children.Add(category);
 
+                            Button showDetails = new Button();
+                            int offerId = Convert.ToInt32(reader.GetInt64(reader.GetOrdinal("offer_id")));
+                            showDetails.Click += (sender, e) => ShowDetails_Click(offerId);
+                            showDetails.Width = 100;
+                            showDetails.Height = 30;
+                            showDetails.Content = "Zobacz ofertę";
+                            Grid.SetRow(showDetails, 5);
+                            Grid.SetColumn(showDetails, 2);
+                            dynamicGrid.Children.Add(showDetails);
+
                             offersGrid.Children.Add(dynamicGrid);
-                            }
-                            row++;
-                        }
+
+                            column++;
+                        }                
                     }
                 }
 
                 db.Close();
             }
+        }
+
+        private void ShowDetails_Click(int offerId)
+        {
+            Offer_Page page = new Offer_Page(offerId);
+            page.ShowDialog();
         }
 
         private (string CompanyLogoSource, string CompanyName) GetCompanyInfo(SqliteConnection db, int companyId)

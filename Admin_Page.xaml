@@ -1,0 +1,91 @@
+﻿<Window x:Class="KarieraPlus.Admin_Page"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KarieraPlus"
+        mc:Ignorable="d"
+        Title="Admin_Page" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Grid.Row="0" Content="Company" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="1" Content="Profession name" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="2" Content="Type of contract" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="3" Content="Type of job" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="4" Content="Salary" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="5" Content="Category" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="6" Grid.RowSpan="2" Content="Duties" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="8" Grid.RowSpan="2" Content="Requirements" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        <TextBox Grid.Column="1" Grid.Row="0" x:Name="companyTxt"/>
+        <TextBox Grid.Column="1" Grid.Row="1" x:Name="professionNameTxt"/>
+        <TextBox Grid.Column="1" Grid.Row="2" x:Name="typeOfContractTxt"/>
+        <TextBox Grid.Column="1" Grid.Row="3" x:Name="typeOfJobTxt"/>
+        <TextBox Grid.Column="1" Grid.Row="4" x:Name="salaryTxt"/>
+        <TextBox Grid.Column="1" Grid.Row="5" x:Name="categoryTxt"/>
+        <ScrollViewer Grid.Column="1" Grid.Row="6" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <TextBox x:Name="dutiesTxt" TextWrapping="WrapWithOverflow" AcceptsReturn="True"/>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" Grid.Row="8" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <TextBox x:Name="requirementsTxt" TextWrapping="WrapWithOverflow" AcceptsReturn="True"/>
+        </ScrollViewer>
+
+        <Button Content="Dodaj oferte" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="10" Width="300" Height="40" Click="AddOffer_Click"/>
+
+
+        <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Companies" FontWeight="Bold"/>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                <Grid x:Name="companiesGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Grid.Column="2" Grid.Row="5" Grid.RowSpan="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Categories" FontWeight="Bold"/>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                <Grid x:Name="categoriesGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+
+
+
+    </Grid>
+</Window>
